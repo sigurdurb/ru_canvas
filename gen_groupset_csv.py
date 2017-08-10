@@ -15,6 +15,13 @@ GROUP_CATGR_NAME = "V1-Group" # Insert your group set/category name here
 
 TO_CSV_FILE = "groupset_" + GROUP_CATGR_NAME + "_details.csv"
 
+# Set CSV up with a template for grades and comments:
+# ..or set these variables to None if you dont want the extra column
+GRADES = .0
+COMMENTS = '''01. 0/5
+02. 0/3
+03. 0/2'''
+
 def main():
 
 	# Set up our Canvas object
@@ -52,6 +59,11 @@ def main():
 
 	if all_rows:
 		df = pd.DataFrame(all_rows, columns=['GroupSet', 'GroupSetID', 'Group', 'GroupID', 'Student', 'StudentID'])
+		if GRADES is not None:
+			df["Grade"] = GRADES
+		if COMMENTS is not None:
+			df["Comment"] = COMMENTS
+		
 		df.to_csv(TO_CSV_FILE, index_label = "Nr")
 		print("Successfully created CSV:", TO_CSV_FILE)
 
