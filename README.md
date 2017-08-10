@@ -52,3 +52,32 @@ You can also just run the script once and it will print out the possible groupse
 You can find this category name on the Tabs of YourCourse->People page or at yourcanvasinstance.com/courses/{your_course_id}/users and look at the tab
 
 * GROUP_CATGR_NAME = ""
+
+
+
+## gen_students.py
+
+This script prints out students id and beginning of their schools email addresses. This is something the programming web needs.
+
+You can also get all the emails by just adding + "@ru.is" to the end.
+
+This script has 2 functions
+
+* get_users(course) : returns all students and teachers/TA's and other people affiliated
+* get_students(course) : returns only those with enrollment_type=student
+
+You need to:
+
+Get your api key/token from your profile->settings
+
+
+* API_KEY = "" 
+
+Get your api url. i.e. "https://{yourschool}.instructure.com/api/v1/" 
+
+* API_URL = ""
+
+Get the Course id from your course url https://reykjavik.instructure.com/courses/{yourcourseID}
+Enter it as an integer into the script
+
+* COURSE_ID = 123
