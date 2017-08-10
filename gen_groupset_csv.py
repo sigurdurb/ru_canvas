@@ -22,7 +22,7 @@ COMMENTS = '''01. 0/5
 02. 0/3
 03. 0/2'''
 
-def main():
+def gen_groupset_csv():
 
 	# Set up our Canvas object
 	canvas = Canvas(API_URL, API_KEY)
@@ -94,4 +94,4 @@ So that function is available if you want to select only the one you need
 '''
 
 if __name__ == '__main__':
-	main()
+	gen_groupset_csv()
