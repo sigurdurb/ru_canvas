@@ -1,7 +1,12 @@
 # Byte-compiled / optimized / DLL files
+*.csv
+*.txt
+canvas_config.py
+
 __pycache__/
 *.py[cod]
 *$py.class
+
 
 # C extensions
 *.so

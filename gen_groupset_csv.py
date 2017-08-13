@@ -13,7 +13,7 @@ COURSE_ID = 254 # type int - a number like 254
 This category name is on the tabs of YourCourse->People page or url:yourcanvasinstance.com/courses/{course_id}/users'''
 GROUP_CATGR_NAME = "V1-Group" # Insert your group set/category name here
 
-TO_CSV_FILE = "groupset_" + GROUP_CATGR_NAME + "_details.csv"
+TO_CSV_FILE = "groupset_" + GROUP_CATGR_NAME + ".csv"
 
 # Set CSV up with a template for grades and comments:
 # ..or set these variables to None if you dont want the extra column
