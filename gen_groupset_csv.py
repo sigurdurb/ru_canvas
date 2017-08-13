@@ -1,12 +1,12 @@
 #!/usr/bin/python3
 
 from canvasapi import Canvas
+'''This imports the API_KEY and API_URL from the canvas_config.py file'''
+from canvas_config import *
 import pandas as pd
-'''Get your api key/token from your profile->settings'''
-API_KEY = ""
-API_URL = "https://yourschool.instructure.com/api/v1/"
 
-'''Course id is in your url; example: https://reykjavik.instructure.com/courses/{Course_ID}'''
+
+'''Course id is in your url; example: https://yourschool.instructure.com/courses/{Course_ID}'''
 COURSE_ID = 254 # type int - a number like 254
 
 '''This is the groups-set/category name, Note: not the assignment-group
@@ -41,7 +41,7 @@ def gen_groupset_csv():
 		possible_groups.append(group_cat.name)
 		if group_cat.name == GROUP_CATGR_NAME:
 			
-			print(group_cat.to_json())
+			#print(group_cat.to_json())
 			groups = list_groups_in_group_category(course,group_cat.id)
 			for g in groups:
 				#print(g.to_json())
@@ -64,6 +64,7 @@ def gen_groupset_csv():
 		if COMMENTS is not None:
 			df["Comment"] = COMMENTS
 		
+
 		df.to_csv(TO_CSV_FILE, index_label = "Nr")
 		print("Successfully created CSV:", TO_CSV_FILE)
 
