@@ -3,7 +3,7 @@
 
 *.csv
 *.txt
-*canvas_config.py
+canvas_config.py
 
 # Byte-compiled / optimized / DLL files
 
