@@ -27,6 +27,8 @@ def main():
 	g_cat_id = int(input("Enter the (number) of the group category you want to generate: "))
 	g_cat = [i for i in group_cats_lis if g_cat_id == i.id]
 	
+	rm_nosubs = input("Do you want to remove those who have not submitted? (y/n): ")
+
 	sec_params = {"include[]":["students"]}
 	sections = course.list_sections(**sec_params)
 
@@ -54,7 +56,7 @@ def main():
 			all_rows.append(group_details)
 	else:
 		print("No id was found for Group Category number:", int(g_cat_id))
-		answer = input("Do you wish to continue getting the students for the assignment?(y/n): ")
+		answer = input("Do you wish to continue getting the students for the assignment? (y/n): ")
 		if answer != "y":
 			exit(1)
 	
@@ -93,7 +95,9 @@ def main():
 
 	# Doing this afterwards simply because we only need it for one student in the row
 	set_submission_date(subs, df)
-
+	if rm_nosubs == 'y':
+		print("Removing students/groups that have not submitted")
+		df = df.drop(df[df['SubmittedAt'] == "Nothing submitted"].index)
 	csv_name += ".csv"
 	df.to_csv(csv_name, index_label = "Nr")
 	print("Successfully created CSV:", csv_name)
