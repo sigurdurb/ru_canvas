@@ -33,8 +33,7 @@ into the scripts below as ```from canvas_config import *```
 ### gen_groupset.py
 This script generates a detailed csv for your groupset.
 Each row has only one group with every student listed.
-It will list all those students who have the assignment, even those who have not submitted (this is because some assignments might have the "no submission" or "paper handin" option) You can also see in the speedgrader which students have "No Submission"
-See this video on how to use the script (to be done)
+It will list all those students who have the assignment, even those who have not submitted (this is because some assignments might have the "no submission" or "paper handin" option) But the CSV will have a column called "SubmittedAt" where you can see the date if there is one. You can also see in the speedgrader which students have "No Submission". 
 
 This creates a CSV with columns for 'GroupSet', 'GroupSetID', 'Group', 'GroupID', 'Student', 'Student_ID','StudentSection','StudentN', 'StudentN_ID','StudentNSection' for each N student in the group
 

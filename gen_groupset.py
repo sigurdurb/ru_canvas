@@ -8,7 +8,7 @@ from itertools import chain
 
 '''Course id is in your url https://reykjavik.instructure.com/courses/{Course_ID}'''
 COURSE_ID = 254
-ASSIGN_ID = 1918
+ASSIGN_ID = 1929
 
 
 '''This script generates csv for groupsets where each group has only one row.
@@ -90,12 +90,11 @@ def main():
 					#print("Adding:", sub.user['name'], sub.user_id)
 					sec_name = find_sections(sections, sub.user_id)
 					df = df.append({'Student':sub.user['name'],'Student_ID':int(sub.user_id),'StudentSection': sec_name},ignore_index=True)
-			
-	'''End of adding students,id's and sections that are not in a group'''
-	#dtypes = dict((el,"int") if "_ID" in el or "Grade" in el else (el,"str") for el in header_cols)
-	#df = df.astype(dtype = dtypes,errors='ignore') # This did not work because of some rows having nan or empty values
+
+	# Doing this afterwards simply because we only need it for one student in the row
+	set_submission_date(subs, df)
+
 	csv_name += ".csv"
-	# Setting option to diplay numbers with no decimal point
 	df.to_csv(csv_name, index_label = "Nr")
 	print("Successfully created CSV:", csv_name)
 
@@ -108,19 +107,34 @@ def find_sections(sections, user_id):
 				sec_name += "/" + sec.name if sec_name != "" else sec.name
 	return sec_name
 
+
 def set_rubrik_headers(course, df):
 	assign = course.get_assignment(ASSIGN_ID)
-	
-	if assign.rubric is not None:
-		print("Getting rubrik for assignment:", assign.name)
-		# This is for VERK's and REIR color coding of TA's and completed assignment status
-		for crit in assign.rubric:
-			col = crit['description'] + "(" + str(crit['points']) + "/" + str(assign.points_possible) + ")"
-			df[col] = ""
-			df[crit['description']+"x"] = ""
-		print("Added rubrik for assignment: ", assign.name)
-	else:
-		print("No rubrik found for assignment:", assign.name)
+	try:
+		if assign.rubric is not None:
+			print("Getting rubrik for assignment:", assign.name)
+			# This is for VERK's and REIR color coding of TA's and completed assignment status
+			for crit in assign.rubric:
+				col = crit['description'] + "(" + str(crit['points']) + "/" + str(assign.points_possible) + ")"
+				df[col] = ""
+				df[crit['description']+"x"] = ""
+			print("Added rubrik for assignment: ", assign.name)
+		else:
+			print("No rubrik found for assignment:", assign.name)
+	except AttributeError:
+		print("No rubric for this assignment", assign.name)
 
+def set_submission_date(subs, df):
+	# Resetting it just in case, and because we are using .loc
+	df.reset_index(drop=True, inplace=True)
+	df["SubmittedAt"] = ""
+	for i in range(0,df.shape[0]):
+		st_id = df.loc[i, "Student_ID"]
+		for sub in subs:
+			if sub.user_id == st_id:
+				if sub.submitted_at == None:
+					df.loc[i,"SubmittedAt"] = "Nothing submitted"
+				else:
+					df.loc[i,"SubmittedAt"] = sub.submitted_at
 if __name__ == '__main__':
 	main()
