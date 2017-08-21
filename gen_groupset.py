@@ -99,7 +99,7 @@ def main():
 		print("Removing students/groups that have not submitted")
 		df = df.drop(df[df['SubmittedAt'] == "Nothing submitted"].index)
 	csv_name += ".csv"
-	df.to_csv(csv_name, index_label = "Nr")
+	df.to_csv(csv_name, index_label = "Nr", float_format="%d")
 	print("Successfully created CSV:", csv_name)
 
 def find_sections(sections, user_id):
