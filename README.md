@@ -37,8 +37,16 @@ It will list all those students who have the assignment, even those who have not
 
 This creates a CSV with columns for 'GroupSet', 'GroupSetID', 'Group', 'GroupID', 'Student', 'Student_ID','StudentSection','StudentN', 'StudentN_ID','StudentNSection' for each N student in the group
 
+So it supports:
 
-If you later use the upload script(yet to be published) it only needs to submit the the grade for one StudentID in the group for it to go to the whole group because that is how the Canvas API works. The upload script will also have a comment if you want to submit a comment. Later we might add functionality to submit a rubric assessment object but teachers/TA's are going to try and use the speedgrader first.
+* Rubric/No Rubric
+* Groups and/or No group assignments
+* Adds section/s for every student, some students are enrolled in many sections and it will simply display for them both like HMV/Forritun. 
+* SubmittedAt: Date of submission Or simply say "Not submitted" if the group/individual did not submit.
+
+If you later use the submit_grades.py script it only needs to submit the the grade for one StudentID in the group for it to go to the whole group because that is how the Canvas API works. The upload script will also have a comment if you want to submit a comment. Later we might add functionality to submit a rubric assessment object but teachers/TA's are going to try and use the speedgrader first.
+
+
 
 You need to:
 
@@ -51,6 +59,11 @@ Enter it as an integer into the script
 Assignment id will be in the url of the assignment https://reykjavik.instructure.com/courses/{yourcourseID}/assignments/{yourassignmentID}
 
 * ASSIGN_ID = 321
+
+
+### submit_grades.py
+
+This script will read the csv that you generated with the gen_groupset.py script and given you have added a "Comment" and "Grade" column, will post the grades to the "StudentID" column. Because the csv from the gen_groupset.py is one group per row it will only post to one member (So that the same comment is not posted multiple times) but the whole group will get the same grade. The Canvas API works so that the grade will only be edited but each comment posted will appear as a separate comment.
 
 ### gen_groupset_individual.py
 
