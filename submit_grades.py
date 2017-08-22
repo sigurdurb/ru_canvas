@@ -9,6 +9,7 @@ from canvas_config import *
 
 '''Course id is in your url https://yourschool.instructure.com/courses/{Course_ID}'''
 COURSE_ID = 123 # Type int
+ASSIGN_ID = 123
 CSV_FILE = "example.csv"
 def main():
 	# Here is an example
@@ -16,10 +17,11 @@ def main():
 	# First, retrieve the Course object
 	course = canvas.get_course(COURSE_ID)
 	
-
-def post_grades(course):
-
 	df = pd.read_csv(CSV_FILE)
+
+	post_grades(course, df)
+
+def post_grades(course, df):
 
 	for index, row in df.iterrows():
 	
@@ -27,7 +29,7 @@ def post_grades(course):
 				"comment[group_comment]":True,
 				"submission[posted_grade]":row["Grade"]
 				}
-		st_id = row["StudentID"]
+		st_id = row["Student_ID"]
 
 		response = course.update_submission(ASSIGN_ID,st_id,**data)
 	
