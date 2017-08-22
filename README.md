@@ -63,7 +63,24 @@ Assignment id will be in the url of the assignment https://reykjavik.instructure
 
 ### submit_grades.py
 
-This script will read the csv that you generated with the gen_groupset.py script and given you have added a "Comment" and "Grade" column, will post the grades to the "StudentID" column. Because the csv from the gen_groupset.py is one group per row it will only post to one member (So that the same comment is not posted multiple times) but the whole group will get the same grade. The Canvas API works so that the grade will only be edited but each comment posted will appear as a separate comment.
+This script will read the csv that you generated with the gen_groupset.py script and given you have added a "Comment" and "Grade" column, will post the grades to the "StudentID" column. Because the csv from the gen_groupset.py is one group per row it will only post to one member (So that the same comment is not posted multiple times) but the whole group will get the same grade. The Canvas API works so that the grade will only be edited but each comment posted will appear as a separate comment. That is why there is one groupe per row.
+
+After the setup steps run it with the csv file
+ 
+python submit_grades.py your.csv
+#### Setup
+
+You need to:
+
+Get the course id from your course url https://reykjavik.instructure.com/courses/{yourcourseID}
+
+Enter it as an integer into the script
+
+* COURSE_ID = 123
+
+Assignment id will be in the url of the assignment https://reykjavik.instructure.com/courses/{yourcourseID}/assignments/{yourassignmentID}
+
+* ASSIGN_ID = 321
 
 ### gen_groupset_individual.py
 
