@@ -44,8 +44,7 @@ So it supports:
 * Adds section/s for every student, some students are enrolled in many sections and it will simply display for them both like HMV/Forritun. 
 * SubmittedAt: Date of submission Or simply say "Not submitted" if the group/individual did not submit.
 
-If you later use the submit_grades.py script it only needs to submit the the grade for one StudentID in the group for it to go to the whole group because that is how the Canvas API works. The upload script will also have a comment if you want to submit a comment. Later we might add functionality to submit a rubric assessment object but teachers/TA's are going to try and use the speedgrader first.
-
+If you later use the submit_grades.py script it only needs to submit the grade for one StudentID in the group for it to go to the whole group because that is how the Canvas API works. The upload script will also have a comment if you want to submit a comment. Later we might add functionality to submit a rubric assessment object but teachers/TA's are going to try and use the speedgrader first.
 
 
 You need to:
