@@ -9,8 +9,8 @@ from canvas_config import *
 
 
 '''Course id is in your url https://yourschool.instructure.com/courses/{Course_ID}'''
-COURSE_ID = 254 # Type int
-ASSIGN_ID = 1929
+COURSE_ID = 123 # Type int
+ASSIGN_ID = 123
 CSV_FILE = sys.argv[1]
 
 def main():
@@ -19,7 +19,7 @@ def main():
 	# First, retrieve the Course object
 	course = canvas.get_course(COURSE_ID)
 	
-	df = pd.read_csv(CSV_FILE)
+	df = pd.read_csv(CSV_FILE, index_col="Nr")
 
 	post_grades(course, df)
 
