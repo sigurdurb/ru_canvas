@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-
+import sys
 '''https://github.com/ucfopen/canvasapi'''
 from canvasapi import Canvas
 
@@ -10,7 +10,7 @@ from canvas_config import *
 '''Course id is in your url https://yourschool.instructure.com/courses/{Course_ID}'''
 COURSE_ID = 123 # Type int
 ASSIGN_ID = 123
-CSV_FILE = "example.csv"
+CSV_FILE = sys.argv[1]
 def main():
 	# Here is an example
 	canvas = Canvas(API_URL, API_KEY)
