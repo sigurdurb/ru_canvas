@@ -5,10 +5,10 @@ from canvasapi import Canvas
 from canvas_config import *
 import pandas as pd
 from itertools import chain
-
+from math import isnan
 '''Course id is in your url https://reykjavik.instructure.com/courses/{Course_ID}'''
-COURSE_ID = 254
-ASSIGN_ID = 1929
+COURSE_ID = 256
+ASSIGN_ID = 2835
 
 
 '''This script generates csv for groupsets where each group has only one row.
@@ -99,7 +99,13 @@ def main():
 		print("Removing students/groups that have not submitted")
 		df = df.drop(df[df['SubmittedAt'] == "Nothing submitted"].index)
 	csv_name += ".csv"
-	df.to_csv(csv_name, index_label = "Nr", float_format="%d")
+
+	all_id_cols = [x for x in header_cols if "ID" in x]
+	# Changing the types of the ID columns so the csv does not have any extra zeroes for the ids no matter if european or usa sheet
+	for col in all_id_cols:
+		df[col] = df[col].apply(float_to_str_no_decimal)
+	
+	df.to_csv(csv_name, index_label = 'Nr', float_format='%.2f', sep=',', decimal=".")
 	print("Successfully created CSV:", csv_name)
 
 def find_sections(sections, user_id):
@@ -132,13 +138,16 @@ def set_submission_date(subs, df):
 	# Resetting it just in case, and because we are using .loc
 	df.reset_index(drop=True, inplace=True)
 	df["SubmittedAt"] = ""
+	df["Grade"] = ""
 	for i in range(0,df.shape[0]):
 		st_id = df.loc[i, "Student_ID"]
 		for sub in subs:
 			if sub.user_id == st_id:
-				if sub.submitted_at == None:
-					df.loc[i,"SubmittedAt"] = "Nothing submitted"
-				else:
-					df.loc[i,"SubmittedAt"] = sub.submitted_at
+				df.loc[i,"Grade"] = sub.score if sub.score != None else float(0)
+				df.loc[i,"SubmittedAt"] = "Nothing submitted" if sub.submitted_at == None else sub.submitted_at
+
+def float_to_str_no_decimal(val):
+	return "" if isnan(val) else "%d" % val
+
 if __name__ == '__main__':
 	main()
