@@ -7,8 +7,8 @@ import pandas as pd
 from itertools import chain
 from math import isnan
 '''Course id is in your url https://reykjavik.instructure.com/courses/{Course_ID}'''
-COURSE_ID = 256
-ASSIGN_ID = 2835
+COURSE_ID = 254
+ASSIGN_ID = 3049
 
 
 '''This script generates csv for groupsets where each group has only one row.
@@ -32,13 +32,13 @@ def main():
 	sec_params = {"include[]":["students"]}
 	sections = course.list_sections(**sec_params)
 
-	csv_name = "Assign_" + str(ASSIGN_ID) + "_"# "This is changed dynamicly to the groupset name"
+	csv_name = "Assign_" + str(ASSIGN_ID) # "This is changed dynamicly to the groupset name"
 	max_group_cnt = 0
 	all_rows = []
 
 	if g_cat:
 		g_cat = g_cat[-1]
-		csv_name += g_cat.name
+		csv_name += "_" + g_cat.name
 		print("Getting students in groups")
 		groups = g_cat.list_groups()
 		for g in groups:
