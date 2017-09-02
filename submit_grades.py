@@ -9,8 +9,8 @@ from canvas_config import *
 
 
 '''Course id is in your url https://yourschool.instructure.com/courses/{Course_ID}'''
-COURSE_ID = 123 # Type int
-ASSIGN_ID = 123
+COURSE_ID = 254 # Type int
+ASSIGN_ID = 3049
 CSV_FILE = sys.argv[1]
 
 def main():
@@ -21,21 +21,32 @@ def main():
 	
 	df = pd.read_csv(CSV_FILE, index_col="Nr")
 
-	post_grades(course, df)
+	submit_grades(course, df)
 
-def post_grades(course, df):
+	print("Successfully submitted all new grades")
 
+def submit_grades(course, df):
+
+	hasCmt = True if 'Comment' in df.columns else False
+	comment = ""
 	for index, row in df.iterrows():
+		if hasCmt:
+			comment = row["Comment"]
+		put_grade_and_comment(course,row["Student_ID"], row["Grade"], comment, True, row["Student"])
 		
-		post_grade_and_comment(course,row["Student_ID"],row["Grade"],row["Comment"])
-		
-	
-def post_grade_and_comment(course, st_id, grade, comment, is_group_cmt = True):
-	data = {"comment[text_comment]": str(comment) ,
-			"comment[group_comment]": bool(is_group_cmt),
-			"submission[posted_grade]": str(grade) }
 
-	response = course.update_submission(ASSIGN_ID,st_id,**data)	
+def put_grade_and_comment(course, user_id, grade, comment, is_group_cmt = True, user_name = ""):
+    # If comment is an empty string/space Canvas will only put the new grade, so no need to have a special case.
+    data = {"comment[text_comment]": str(comment),
+            "comment[group_comment]": bool(is_group_cmt),
+            "submission[posted_grade]": str(grade) }
+    
+    sub_resp = course.update_submission(ASSIGN_ID,user_id,**data) 
+
+    
+    
+    print("Successfully updated user: ", user_name,'\t',sub_resp.user_id, "with grade:", sub_resp.grade)
+
 
 if __name__ == '__main__':
 	main()
