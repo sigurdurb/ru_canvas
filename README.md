@@ -1,5 +1,5 @@
 # ru_canvas
-**Note: this repo has moved to https://repository.cs.ru.is/git/canvas-tools.git**
+**Note: this repo has moved to https://projects.cs.ru.is/projects/canvas-tools**
 
 Python scripts for use by Teachers and TA's to interact with the canvas api.
 
